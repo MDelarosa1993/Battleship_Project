@@ -22,7 +22,4 @@ RSpec.describe Ship do
       expect(@cruiser.length).to eq(3)
     end
   end
-
-
-
 end
