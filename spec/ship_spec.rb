@@ -7,39 +7,56 @@ end
 RSpec.describe Ship do 
   before(:each) do 
     @cruiser = Ship.new("Cruiser", 3)
+    @submarine = Ship.new("Submarine", 2)
   end
 
   describe 'Initialize' do 
     it 'exists' do 
       expect(@cruiser).to be_an_instance_of(Ship)
+      expect(@submarine).to be_an_instance_of(Ship)
     end
     
     it 'has a name' do 
       expect(@cruiser.name).to eq ("Cruiser")
+      expect(@submarine.name).to eq("Submarine")
     end
 
     it 'has length' do 
       expect(@cruiser.length).to eq(3)
+      expect(@submarine.length).to eq(2)
     end
 
     it 'has health' do
       expect(@cruiser.health).to eq(3)
+      expect(@submarine.health).to eq(2)
     end
-
-    it 'has not sunk' do
-      expect(@cruiser.sunk?).to be false
-    end
-
+  end
+  
+  describe "hit" do
     it 'has taken a hit' do
       @cruiser.hit
       expect(@cruiser.health).to eq(2)
-    end
 
+      @submarine.hit
+      expect(@submarine.health).to eq(1)
+    end
+  end
+
+  describe 'sunk?' do 
+    it 'has not sunk' do
+      expect(@cruiser.sunk?).to be false
+      expect(@submarine.sunk?).to be false
+    end
+    
     it 'can be sunk' do
       @cruiser.hit
       @cruiser.hit
       @cruiser.hit
       expect(@cruiser.sunk?).to eq(true)
+
+      @submarine.hit
+      @submarine.hit
+      expect(@submarine.sunk?).to eq(true)
     end
   end
 end
