@@ -8,6 +8,8 @@ end
 RSpec.describe Cell do 
   before(:each) do 
     @cell = Cell.new("B4")
+    @cell_2 = Cell.new("B3")
+    @cell_3 = Cell.new("B2")
     @cruiser = Ship.new("Cruiser", 3)
   end
 
@@ -52,11 +54,18 @@ RSpec.describe Cell do
       expect(@cell.render).to eq("M")
     end
 
-    xit 'shows H for a hit' do 
+    it 'shows H for a hit' do 
+      @cell.place_ship(@cruiser)
+      @cell.fire_upon
       expect(@cell.render).to eq("H")
     end
 
-    xit 'shows X on sunk ship cells' do
+    it 'shows X on sunk ship cells' do
+      @cell.place_ship(@cruiser)
+      @cell.fire_upon
+      @cruiser.hit
+      @cruiser.hit
+      @cruiser.sunk?
       expect(@cell.render).to eq("X")
     end
 

@@ -36,6 +36,11 @@ attr_reader :coordinate, :ship, :fired_upon
     if fired_upon && empty?
       return "M"
     end
-    if 
+    if fired_upon? && !empty? && !@ship.sunk?
+      return "H"
+    end
+    if fired_upon? && !empty? && @ship.sunk?
+      return "X"
+    end
   end
 end
