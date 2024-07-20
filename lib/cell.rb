@@ -25,4 +25,10 @@ attr_reader :coordinate, :ship, :fired_upon
     end
     @fired_upon = true
   end
+
+  def render(reveal = false) 
+    if reveal && !empty?
+      return "S"
+    end
+  end
 end
