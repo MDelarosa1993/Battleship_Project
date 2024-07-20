@@ -25,7 +25,9 @@ RSpec.describe Ship do
     it 'has health' do
       expect(@cruiser.health).to eq(3)
     end
-
+  end
+  
+  describe "hit" do 
     it 'has not sunk' do
       expect(@cruiser.sunk?).to be false
     end
@@ -35,6 +37,18 @@ RSpec.describe Ship do
       expect(@cruiser.health).to eq(2)
     end
 
+    it 'can be sunk' do
+      @cruiser.hit
+      @cruiser.hit
+      @cruiser.hit
+      expect(@cruiser.sunk?).to eq(true)
+    end
+  end
+
+  describe 'sunk?' do 
+    it 'has not sunk' do
+      expect(@cruiser.sunk?).to be false
+    end
     it 'can be sunk' do
       @cruiser.hit
       @cruiser.hit

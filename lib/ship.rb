@@ -5,12 +5,12 @@ attr_reader :name, :length, :health
     @length = length
     @health = 3
   end
+  
+  def hit
+    @health -= 1
+  end
 
   def sunk?
     @health <= 0
-  end
-
-  def hit
-    @health -= 1
   end
 end
