@@ -35,6 +35,7 @@ RSpec.describe Ship do
   describe "hit" do 
     it 'has not sunk' do
       expect(@cruiser.sunk?).to be false
+      expect(@submarine.sunk?).to be false
     end
 
     it 'has taken a hit' do
