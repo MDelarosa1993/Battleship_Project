@@ -43,11 +43,12 @@ RSpec.describe Cell do
   end
 
   describe 'can render' do
-    xit 'shows . for cell not fired upon' do 
+    it 'shows . for cell not fired upon' do 
       expect(@cell.render).to eq(".")
     end
     
-    xit 'shows M for a missed shot' do
+    it 'shows M for a missed shot' do
+      @cell.fire_upon
       expect(@cell.render).to eq("M")
     end
 

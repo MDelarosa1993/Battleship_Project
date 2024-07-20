@@ -30,5 +30,12 @@ attr_reader :coordinate, :ship, :fired_upon
     if reveal && !empty?
       return "S"
     end
+    if !fired_upon?
+      return "."
+    end
+    if fired_upon && empty?
+      return "M"
+    end
+    if 
   end
 end
