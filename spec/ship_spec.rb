@@ -41,6 +41,9 @@ RSpec.describe Ship do
     it 'has taken a hit' do
       @cruiser.hit
       expect(@cruiser.health).to eq(2)
+
+      @submarine.hit
+      expect(@submarine.health).to eq(1)
     end
 
     it 'can be sunk' do
