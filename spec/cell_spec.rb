@@ -1,9 +1,15 @@
 require './lib/ship'
 require './lib/cell'
 
+RSpec.configure do |config|
+  config.formatter = :documentation
+end
+
 RSpec.describe Cell do 
   before(:each) do 
     @cell = Cell.new("B4")
+    @cell_2 = Cell.new("B3")
+    @cell_3 = Cell.new("B2")
     @cruiser = Ship.new("Cruiser", 3)
   end
 
@@ -35,6 +41,37 @@ RSpec.describe Cell do
       @cell.fired_upon
       @cruiser.hit
       expect(@cruiser.health).to eq(2)
+    end
+  end
+
+  describe 'can render' do
+    it 'shows . for cell not fired upon' do 
+      expect(@cell.render).to eq(".")
+    end
+    
+    it 'shows M for a missed shot' do
+      @cell.fire_upon
+      expect(@cell.render).to eq("M")
+    end
+
+    it 'shows H for a hit' do 
+      @cell.place_ship(@cruiser)
+      @cell.fire_upon
+      expect(@cell.render).to eq("H")
+    end
+
+    it 'shows X on sunk ship cells' do
+      @cell.place_ship(@cruiser)
+      @cell.fire_upon
+      @cruiser.hit
+      @cruiser.hit
+      @cruiser.sunk?
+      expect(@cell.render).to eq("X")
+    end
+
+    it 'shows S for revealed ship' do 
+      @cell.place_ship(@cruiser)
+      expect(@cell.render (true)).to eq("S")
     end
   end
 end
