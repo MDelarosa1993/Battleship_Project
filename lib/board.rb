@@ -7,8 +7,6 @@ class Board
     create_cells
   end
 
-  
-
   def create_cells
     ('A'..'D').each do |letter|
       (1..4).each do |number|
@@ -17,6 +15,5 @@ class Board
       end
     end
   end
-
 end
   
