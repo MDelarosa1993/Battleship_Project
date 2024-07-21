@@ -1,5 +1,6 @@
 require './lib/board'
 require './lib/cell'
+require './lib/ship'
 
 RSpec.configure do |config|
   config.formatter = :documentation
@@ -19,11 +20,35 @@ RSpec.describe Board do
       expect(@board.cells.size).to eq(16)
     end
   
-  
     it 'returns 16 objects in a hash' do 
         expect(@board.cells.values).to all(be_a(Cell))
         expect(@board.cells.size).to eq(16)
     end
   end
-    
+
+  describe '#Validating coordinates' do
+    it 'is it a valid coordinate?' do
+      expect(@board.valid_coordinate?("A1")).to be(true)
+      expect(@board.valid_coordinate?("D4")).to be(true)
+      expect(@board.valid_coordinate?("A5")).to be(false)
+      expect(@board.valid_coordinate?("E1")).to be(false)
+      expect(@board.valid_coordinate?("A22")).to be(false)
+    end
+  end
+
+  describe '#valid_placement?' do
+    it 'is it a valid placement?' do
+      @cruiser = Ship.new("Cruiser", 3)
+      @submarine = Ship.new("Submarine", 2)
+
+      expect(@board.valid_placement?(@cruiser, ["A1", "A2", "A3"])).to be(true)
+      expect(@board.valid_placement?(@cruiser, ["A1", "A2"])).to be (false)
+      expect(@board.valid_placement?(@cruiser, ["A1", "A2", "A6"])).to be (false)
+
+      expect(@board.valid_placement?(@submarine, ["A1", "A2"])).to be (true)
+      expect(@board.valid_placement?(@submarine, ["A1", "B1"])).to be (true)
+      expect(@board.valid_placement?(@submarine, ["A2", "C1"])).to be (false)
+      expect(@board.valid_placement?(@submarine, ["A2", "A3", "A4"])).to be (false)
+    end
+  end
 end
