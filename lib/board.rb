@@ -14,6 +14,7 @@ class Board
     return false unless coordinates.length == ship.length
     return false unless consecutive?(coordinates)
     return false if diagonal?(coordinates)
+    return false if overlapping?(coordinates)
     true
   end
 
@@ -61,6 +62,10 @@ class Board
     coordinates.each do |coordinate|
       cells[coordinate].place_ship(ship)
     end
+  end
+
+  def overlapping?(coordinates)
+    coordinates.any? { |coord| @cells[coord].ship }
   end
 end
   

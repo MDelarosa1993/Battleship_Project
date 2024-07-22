@@ -77,4 +77,11 @@ RSpec.describe Board do
       expect(@board.cells["A2"].ship).to be(@board.cells["A3"].ship)
     end
   end
+
+  describe '#overlapping?' do 
+   it 'test that ships overlap' do 
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    expect(@board.valid_placement?(@submarine, ["A1", "B1"])).to be(false)
+   end
+  end
 end
