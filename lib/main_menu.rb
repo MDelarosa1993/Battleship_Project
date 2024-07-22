@@ -1,5 +1,7 @@
-class Game
+class MainMenu
+  attr_reader
   def initialize
+    
     @running = true
   end
   def display_menu

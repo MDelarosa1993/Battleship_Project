@@ -1,4 +1,4 @@
-require './lib/game'
+require './lib/main_menu'
 
-menu = Game.new
+menu = MainMenu.new
 menu.run
