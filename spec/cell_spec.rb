@@ -62,10 +62,10 @@ RSpec.describe Cell do
 
     it 'shows X on sunk ship cells' do
       @cell.place_ship(@cruiser)
+      @cruiser.hit
+      @cruiser.hit
+      @cruiser.hit
       @cell.fire_upon
-      @cruiser.hit
-      @cruiser.hit
-      @cruiser.sunk?
       expect(@cell.render).to eq("X")
     end
 

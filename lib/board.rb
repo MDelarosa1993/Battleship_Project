@@ -7,6 +7,16 @@ class Board
   def initialize
     @cells = {}
     create_cells
+   
+  end
+
+
+  def valid_placement?(ship, coordinates)
+    return false unless coordinates.length == ship.length
+    return false unless consecutive?(coordinates)
+    return false if diagonal?(coordinates)
+    return false if overlapping?(coordinates)
+    true
   end
 
   def create_cells
@@ -19,21 +29,61 @@ class Board
   end
 
   def valid_coordinate?(coordinate)
-    @cells.include?(coordinate)
+    @cells.key?(coordinate)
   end
 
-  def valid_placement?(ship, coordinates)
-    return false unless coordinates.all? { |coordinate| valid_coordinate?(coordinate) }
-    return false unless coordinates.length == ship.length
-
-    letters = coordinates.map { |coordinate| coordinate[0] }
-    numbers = coordinates.map { |coordinate| coordinate[1].to_i }
-
-    consecutive_letters = (letters.first..letters.last).to_a
-    consecutive_numbers = (numbers.first..numbers.last).to_a
-
-    (letters.uniq.length == 1 && numbers == consecutive_numbers) ||
-    (numbers.uniq.length == 1 && letters == consecutive_letters)
+  
+  def consecutive_letters?(letters)
+    letters.map(&:ord).each_cons(2).all? { |a, b| b == a + 1 }
   end
+
+  def consecutive_numbers?(numbers)
+    numbers.each_cons(2).all? { |a, b| b == a + 1 }
+  end
+  
+
+  def consecutive?(coordinates)
+    letters = coordinates.map { |coord| coord[0] }
+    numbers = coordinates.map { |coord| coord[1..-1].to_i }
+
+    consecutive_letters?(letters) || consecutive_numbers?(numbers)
+  end
+
+  def diagonal?(coordinates)
+    letters = coordinates.map { |coord| coord[0].ord }
+    numbers = coordinates.map { |coord| coord[1..-1].to_i }
+  
+    diagonal_letters = letters.each_cons(2).all? { |a, b| (b - a).abs == 1 }
+    diagonal_numbers = numbers.each_cons(2).all? { |a, b| (b - a).abs == 1 }
+  
+    diagonal_letters && diagonal_numbers
+  end
+
+  def place(ship, coordinates)
+    coordinates.each do |coordinate|
+      cells[coordinate].place_ship(ship)
+    end
+  end
+
+  def overlapping?(coordinates)
+    coordinates.any? { |coord| @cells[coord].ship }
+  end
+
+  def render(reveal = false)
+    board_display = "  1 2 3 4 \n"
+
+    ("A".."D").each do |letter|
+      row = "#{letter} "
+      (1..4).each do |number|
+        coordinate = "#{letter}#{number}"
+        row += @cells[coordinate].render(reveal) + " "
+      end
+      board_display += row + "\n"
+    end
+
+    board_display
+  end
+
 end
+
   
