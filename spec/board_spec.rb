@@ -79,9 +79,45 @@ RSpec.describe Board do
   end
 
   describe '#overlapping?' do 
-   it 'test that ships overlap' do 
-    @board.place(@cruiser, ["A1", "A2", "A3"])
-    expect(@board.valid_placement?(@submarine, ["A1", "B1"])).to be(false)
+    it 'test that ships overlap' do 
+      @board.place(@cruiser, ["A1", "A2", "A3"])
+      expect(@board.valid_placement?(@submarine, ["A1", "B1"])).to be(false)
    end
+  end
+
+  describe '#render' do
+    it 'renders without showing ships' do
+      expect(@board.render).to eq("  1 2 3 4 \n" +
+                                   "A . . . . \n" +
+                                   "B . . . . \n" +
+                                   "C . . . . \n" +
+                                   "D . . . . \n")
+    end
+
+    it 'renders the board showing ships' do
+      @cruiser = Ship.new("Cruiser", 3)
+      @board.place(@cruiser, ["A1", "A2", "A3"])
+      expect(@board.render(true)).to eq("  1 2 3 4 \n" +
+                                         "A S S S . \n" +
+                                         "B . . . . \n" +
+                                         "C . . . . \n" +
+                                         "D . . . . \n")
+    end
+
+    it 'renders hits, misses, and sunken ships' do
+      @board.place(@cruiser, ["A1", "A2", "A3"])
+      @board.cells["A1"].fire_upon
+      @board.cells["A2"].fire_upon
+      @board.cells["B2"].fire_upon
+      @board.cells["A3"].fire_upon
+      @cruiser.hit
+      @cruiser.hit
+      @cruiser.hit
+      expect(@board.render).to eq("  1 2 3 4 \n" +
+                                  "A X X X . \n" +
+                                  "B . M . . \n" +
+                                  "C . . . . \n" +
+                                  "D . . . . \n")
+    end
   end
 end

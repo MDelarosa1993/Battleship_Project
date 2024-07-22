@@ -7,6 +7,7 @@ class Board
   def initialize
     @cells = {}
     create_cells
+   
   end
 
 
@@ -67,5 +68,22 @@ class Board
   def overlapping?(coordinates)
     coordinates.any? { |coord| @cells[coord].ship }
   end
+
+  def render(reveal = false)
+    board_display = "  1 2 3 4 \n"
+
+    ("A".."D").each do |letter|
+      row = "#{letter} "
+      (1..4).each do |number|
+        coordinate = "#{letter}#{number}"
+        row += @cells[coordinate].render(reveal) + " "
+      end
+      board_display += row + "\n"
+    end
+
+    board_display
+  end
+
 end
+
   
