@@ -8,26 +8,42 @@ class Game
 
   def setup
     puts "Setting up th egame"
-    # place_computer_ships
+    place_computer_ships
     place_player_ships
   end
 
-  # def place_computer_ships
-  #   @computer_ships.each do |ship|
-  #     placed = false
-  #     until placed
-  #       coodinates = generate_random_coordinates(ship.length)
-  #       if @computer_board.valid_placement?(ship, coordinates)
-  #         @computer_board.place(ship, coordinates)
-  #         placed = true
-  #       end
-  #     end
-  #   end
-  # end
+  def place_computer_ships
+    @computer_ships.each do |ship|
+      placed = false
+      until placed
+        coordinates = generate_random_coordinates(ship.length)
+        if @computer_board.valid_placement?(ship, coordinates)
+          @computer_board.place(ship, coordinates)
+          placed = true
+          display_board(@computer_board)
+        end
+      end
+    end
+  end
 
-  # def generate_random_coordinates(length)
-    
-  # end
+  def generate_random_coordinates(length)
+    rows = ('A'..'D').to_a
+    columns = (1..4).to_a
+
+    direction = ['horizontal', 'vertical'].sample
+    coordinates = []
+
+    if direction == 'horizontal'
+      row = rows.sample
+      start_column = rand(1..4 - length + 1)
+      length.times { |i| coordinates << "#{row}#{start_column + i}" }
+    else 
+      start_row = rand(0..(4 - length))
+      column = columns.sample
+      length.times { |i| coordinates << "#{rows[start_row + i]}#{column}" }
+    end
+    coordinates
+  end
 
   def place_player_ships
     @player_ships.each do |ship|
