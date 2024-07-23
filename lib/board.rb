@@ -7,7 +7,6 @@ class Board
   def initialize
     @cells = {}
     create_cells
-   
   end
 
 
