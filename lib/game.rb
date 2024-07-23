@@ -29,8 +29,6 @@ class Game
     end
   end
 
-  private
-
   def setup
     puts "Setting up the game..."
     place_computer_ships
