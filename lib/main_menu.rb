@@ -11,8 +11,8 @@ class MainMenu
 
   def play_game
     game = Game.new
-    # game.setup
-    # game.start
+    game.setup
+    game.start
   end
 
   def exit_game

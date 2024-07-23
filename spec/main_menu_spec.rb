@@ -17,16 +17,4 @@ RSpec.describe MainMenu do
       # allow(@game).to receive(:gets).and_return('p')
     end
   end
-
-  describe 'Setup' do
-
-  end
-
-  describe 'Turn' do 
-
-  end
-
-  describe 'End game' do
-    
-  end
 end
