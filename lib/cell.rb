@@ -21,11 +21,13 @@ attr_reader :coordinate, :ship, :fired_upon
 
   def fire_upon
     @fired_upon = true
-    @ship.hit if @ship
-    # if !empty? && !@fired_upon
-    #   @ship.hit
-    # end
-    # @fired_upon = true
+    if @ship
+      @ship.hit 
+      return "a hit" if !@ship.sunk?
+      return "sunk" if @ship.sunk?
+    else
+      return "a miss"
+    end
   end
 
   def render(reveal = false)
