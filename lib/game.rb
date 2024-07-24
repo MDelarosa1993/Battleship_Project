@@ -56,7 +56,7 @@ class Game
         puts "You now need to lay out your #{ship.name} (#{ship.length} spaces)."
         puts @player_board.render(true)
         puts "Enter the squares for the #{ship.name} (#{ship.length} spaces):"
-        coordinates = gets.chomp.split
+        coordinates = gets.chomp.split.map(&:upcase)
         if @player_board.valid_placement?(ship, coordinates)
           @player_board.place(ship, coordinates)
           valid_placement = true
