@@ -24,7 +24,7 @@ attr_reader :coordinate, :ship, :fired_upon
     if @ship
       @ship.hit 
       return "a hit" if !@ship.sunk?
-      return "a hit! You sunk my ship" if @ship.sunk?
+      return "a hit! The ship is sunk" if @ship.sunk?
     else
       return "a miss"
     end
