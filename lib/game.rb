@@ -52,6 +52,9 @@ class Game
     @player_ships.each do |ship|
       valid_placement = false
       until valid_placement
+        puts "\n"
+        puts "* * * * * * * * * * * *"
+        puts "\n"
         puts "I have laid out my ships on the grid."
         puts "You now need to lay out your #{ship.name} (#{ship.length} spaces)."
         puts @player_board.render(true)
@@ -90,10 +93,12 @@ class Game
   end
 
   def player_turn
-    puts "============== PLAYER TURN =============="
+    puts "============= PLAYER TURN =============="
     coordinate = get_player_coordinate
     result = @computer_board.cells[coordinate].fire_upon
+    puts "\n"
     puts "Your shot on #{coordinate} was #{result}."
+    puts "\n"
   end
 
   def get_player_coordinate
@@ -109,10 +114,12 @@ class Game
   end
 
   def computer_turn
-    puts "============== COMPUTER TURN =============="
+    puts "============ COMPUTER TURN ============="
     coordinate = random_coordinate_to_fire
     result = @player_board.cells[coordinate].fire_upon
+    puts "\n"
     puts "My shot on #{coordinate} was #{result}."
+    puts "\n"
   end
 
   def random_coordinate_to_fire
