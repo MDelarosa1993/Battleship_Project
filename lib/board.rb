@@ -40,12 +40,20 @@ class Board
     numbers.each_cons(2).all? { |a, b| b == a + 1 }
   end
   
-
   def consecutive?(coordinates)
     letters = coordinates.map { |coord| coord[0] }
     numbers = coordinates.map { |coord| coord[1..-1].to_i }
 
-    consecutive_letters?(letters) || consecutive_numbers?(numbers)
+    same_letters = letters.uniq.size == 1
+    same_numbers = numbers.uniq.size == 1
+
+    if same_letters
+      return consecutive_numbers?(numbers)
+    elsif same_numbers
+      return consecutive_letters?(letters)
+    else
+      return false
+    end
   end
 
   def diagonal?(coordinates)
